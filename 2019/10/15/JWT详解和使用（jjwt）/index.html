@@ -195,7 +195,7 @@
 </ul>
 <h2 id="JWT怎么用"><a href="#JWT怎么用" class="headerlink" title="JWT怎么用"></a>JWT怎么用</h2><p>在登录时，服务器端获取用户的信息等，根据需求（如expiration等）生成一个JWT返回给客户端。客户端每次请求时，带上该JWT，服务器端只需要对该JWT进行解密，就可以得知该JWT是否有效、用户的信息（注意不能有敏感信息）等。这个过程服务端不需要存储JWT的内容（不同于之前类似Session id的那种token），只需要对JWT进行加解密操作。</p>
 <p>ps.之前我使用的类似Session id的token是指用随机生成的字符串作为token（同时作为缓存的key），将用户信息json化（或其他序列化方式）缓存。token返回给客户端，客户端每次请求时带上token，服务器就可以从缓存中读出用户信息，减少了数据库的压力（？）。</p>
-<h2 id="JWT的结构"><a href="#JWT的结构" class="headerlink" title="JWT的结构"></a>JWT的结构</h2><p><img src="assets/874963-20180709124807031-664967381.png" alt="img"></p>
+<h2 id="JWT的结构"><a href="#JWT的结构" class="headerlink" title="JWT的结构"></a>JWT的结构</h2><p><img src="https://i.loli.net/2019/10/15/EqYNob7VF8tSeGj.png" alt="874963-20180709124807031-664967381.png"></p>
 <p>如图，JWT由三个部分组成，之间由一个“.”连接</p>
 <ul>
 <li>Header/头部（我来组成头部x）</li>
@@ -258,7 +258,7 @@
 <h4 id="生成JWT"><a href="#生成JWT" class="headerlink" title="生成JWT"></a>生成JWT</h4><p>先贴代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] secret = <span class="string">"2162d3e65a421bc0ac76ae5acfe29c650becb73f2a9b8ce57941036331b1aaa8"</span>.getBytes();</span><br><span class="line">SecretKey key = Keys.hmacShaKeyFor(secret);</span><br><span class="line"></span><br><span class="line">String jws = Jwts.builder()</span><br><span class="line">        .setHeaderParam(<span class="string">"kid"</span>, <span class="string">"123456"</span>)</span><br><span class="line">        .setSubject(<span class="string">"111"</span>)</span><br><span class="line">        .setIssuer(<span class="string">"ameow"</span>)</span><br><span class="line">        .setNotBefore(<span class="keyword">new</span> Date())</span><br><span class="line">        .claim(<span class="string">"weisha"</span>, <span class="string">"wozhidaole"</span>)</span><br><span class="line">        .signWith(key)</span><br><span class="line">        .compact();</span><br></pre></td></tr></table></figure>
 
-<p>首先是我比较关心的key的部分。查阅文档（<a href="https://github.com/jwtk/jjwt）可以知道，JWT对key的长度是有要求的，以这里SHA-256为例，就需要256位的key。具体加密方法对应的key要求可以在文档中查到，不多叙述（因为不会）。" target="_blank" rel="noopener">https://github.com/jwtk/jjwt）可以知道，JWT对key的长度是有要求的，以这里SHA-256为例，就需要256位的key。具体加密方法对应的key要求可以在文档中查到，不多叙述（因为不会）。</a></p>
+<p>首先是我比较关心的key的部分。查阅文档（<a href="https://github.com/jwtk/jjwt" target="_blank" rel="noopener">https://github.com/jwtk/jjwt</a> ）可以知道，JWT对key的长度是有要求的，以这里SHA-256为例，就需要256位的key。具体加密方法对应的key要求可以在文档中查到，不多叙述（因为不会）。</p>
 <p>这里我想选择一个字符串“hello”作为key，于是我需要生成一个对应的SHA-256加密的串，这里可以用Java实现SHA-256加密，也可以使用在线的SHA-256生成工具直接生成这个串，然后直接换成byte形式，用jjwt提供的助手方法转换成key。<em>（可能这样会不太安全？）</em></p>
 <p>然后就是JWS的部分，用Jwts.builder()，然后就是set里面的内容，最后sign和compact，就可以得到生成的JWT。</p>
 <p>如果要生成自定义的claim，可以采用以下的方法</p>
@@ -335,7 +335,7 @@
         <section class="post-nav">
             
             
-            <a class="next" rel="next" href="/2019/10/14/TensorFlow解决MNIST数字识别问题/">TensorFlow解决MNIST数字识别问题</a>
+            <a class="next" rel="next" href="/2019/10/14/meow/">meow</a>
             
         </section>
 
