@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>阿猫的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Ameow&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Ameow&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Leslie Leung</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 9, 2021&nbsp;&nbsp;16:03:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="thinkphp悲观锁机制处理高并发"><a href="#thinkphp悲观锁机制处理高并发" class="headerlink" title="thinkphp悲观锁机制处理高并发"></a>thinkphp悲观锁机制处理高并发</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>突然间被运营滴滴说某个活动的报名人数超过了限制人数，问怎么回事，我一下子还挺蒙的，我明明有在报名的操作之前设置了检查如果超过报名人数代码逻辑会抛错继续报名的呀。</p>
+<p><img src="http://img.ameow.xyz/20200702232803.jpg" alt="报名人数超过限制的人数"></p>
+<p>然后我又打开数据库看了一下，出现了以下的情况：</p>
+<p><img src="http://img.ameow.xyz/20200703001725.png" alt="表里有重复插入的数据"></p>
+<p>于是情况就很明了了，这明显就是并发控制没有做好。为了叙述清楚这个情况，下面讲述一下业务逻辑：首先是从meeting表查是否报名已满，如果未满，则开始事务，将signed字段自增1，然后把参会记录插入到meeting_member表，提交事务。这里实际上是出现了丢失更新，举例如下。</p>
+<table>
+<thead>
+<tr>
+<th>T1</th>
+<th>T2</th>
+<th>数据库中signed的值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BEGIN;</td>
+<td></td>
+<td>0</td>
+</tr>
+<tr>
+<td>SELECT signed FROM meeting WHERE meeting_id=xx; <strong>（读出来的值为0）</strong></td>
+<td>BEGIN;</td>
+<td></td>
+</tr>
+<tr>
+<td>UPDATE meeting SET signed=signed+1 WHERE meeting_id=xx;</td>
+<td>SELECT signed FROM meeting WHERE meeting_id=xx; <strong>（读出来的值也为0）</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>COMMIT;</td>
+<td>UPDATE meeting SET signed=signed+1 WHERE meeting_id=xx;</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>COMMIT;</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>可以看到，如果T1没有提交，T2会读取到原来的值，最终出现T1的更新丢失的问题。对应到具体场景就是，如果有两个事务，第一个读取、然后更新，但还没有提交，这时候开始了第二个事务，他读取到的就是第一个事务更新前的数据，同样进行自增，这是T1提交，T2也提交，但是signed只增加了1。</p>
+<p>（中间有进行实验，但是由于填这个坑花的时间太长，就不把实验过程放上来了，结果跟上表中罗列的一致）</p>
+<h3 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h3><p>一开始我马上联想到的是事务的隔离级别以及脏读、不可重复读、幻读之类的问题，实际上这里出现的是<strong>第二类丢失更新</strong>[<sup>1</sup>]问题，丢失更新是指两个事务更新数据时可能会覆盖对方的更新，并不是脏读（T2错误读取到T1已经修改但未提交的数据）、不可重复读（T1进行两次读，中间T2对数据进行修改并提交，T1两次读到的数据不同）、幻读（T1修改了表中符合某种条件的数据，T2又新增了一条符合这种条件的数据，T1会发现还有没有修改的数据）[<sup>2</sup>]。这就是为什么即使mysql已经是可重复读（Repeatable Read）的事务隔离等级，但还是会出现丢失更新的原因[<sup>3</sup>]。</p>
+<p>这里蛮坑的，我往事务隔离等级这个方向想了很久，才发现方向根本不对，可重复读已经解决了脏读和不可重复读的问题[<sup>4</sup>]，问题不是出在事务隔离等级上，而是应该在这里加上一个锁的机制。这里又有新的疑惑，为什么有了事务（锁协议是事务的一种实现方式），还需要另外的锁呢？这里考虑到粒度的问题[<sup>5</sup>]。因此最后应该使用的解决方法是悲观锁或者乐观锁。</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>解决方法实际上比较<del>简单</del>（简单个屁），只需要加上悲观锁或者乐观锁就可以了。值得一提的是，其实把事务隔离等级调成未提交读或者可串行化也能解决问题，但如果使用未提交读那会是一个倒退，可串行化会造成并发性能的严重下降，所以不采用。</p>
+<p>如果对比乐观锁和悲观锁，乐观锁需要代码实现（增加一个版本字段），而悲观锁可以用数据库原生的方式实现。悲观锁实现较为简单，但悲观锁的并发性能不如乐观锁。</p>
+<h2 id="悲观锁介绍"><a href="#悲观锁介绍" class="headerlink" title="悲观锁介绍"></a>悲观锁介绍</h2><p>悲观的意思是，每次获取数据的时候，都会担心数据被修改，所以每次获取数据的时候都会进行加锁。在当前场景下，悲观锁就是在读取目前的signed时，给这个数据加上<strong>行级的排他锁</strong>，然后再进行更新。如果在T1还没有提交时，T2（一个同样步骤的事务）想要读取这个数据，因为他想要获得的是一个排它锁，由于T1还未提交，T1持有的排它锁会阻塞T2，T2只能等待T1提交之后才能读这一个数据。</p>
+<h3 id="排他锁"><a href="#排他锁" class="headerlink" title="排他锁"></a>排他锁</h3><p>在mysql中，<strong>排他锁</strong>可以这样使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT ... FOR UPDATE;</span><br></pre></td></tr></table></figure>
+
+<p>mysql会对查询结果集中每行都添加排它锁，在事务操作中，更新和删除操作会自动加上排他锁[<sup>7</sup>]。</p>
+<p>如果数据被加上了排他锁，那么如果查询中无论是请求共享锁或是排他锁，都会因为之前的排他锁而被阻塞，直到之前的排他锁因为事务提交或回滚释放。如果不带任何锁的SELECT语句，无论查询的数据是否有被加锁（包括共享锁和排他锁），都能够进行查询而不被阻塞。具体的表现可以见[<sup>8</sup>]。</p>
+<h3 id="行锁和表锁"><a href="#行锁和表锁" class="headerlink" title="行锁和表锁"></a>行锁和表锁</h3><p>mysql对表的锁有两种不同的粒度，分别是表锁和行锁。行锁是粒度最小的锁，InnoDB支持行锁和表锁，而MyISAM只支持表锁。这里特意提出来，是因为并不是<code>SELECT ...  FOR UPDATE;</code>就是行级锁，只有查询到数据、根据主键和/或对非主键含索引进行查询时才能使用行级锁，其他情况使用的还是表锁。具体原因是，InnoDB行锁是通过对索引的索引项加锁来实现的，这点值得注意。例如这里要实现行锁，就要对这个字段建索引。</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p>讲了那么多，做一个实验验证一下。</p>
+<p>首先看一下mysql8.0默认的事务隔离级别。（注意8.0与5.x有分别）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@global.transaction_isolation,@@transaction_isolation;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到默认的事务隔离级别是Repeatable Read（可重复读）。</p>
+<p><img src="http://img.ameow.xyz/20200703081114.png" alt></p>
+<p>然后新开两个查询连接，这里使用university数据库为例（上课用惯了），事务里进行一个查询和更新操作，如下所示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">SELECT * FROM instructor WHERE name=&apos;Srinivasan&apos; FOR UPDATE;</span><br><span class="line">UPDATE instructor SET salary=65001 WHERE ID=10101;</span><br><span class="line">-- ROLLBACK;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+
+<p>先在第一个连接里执行前两行，开始一个事务T1，然后进行查询并加锁。注意这里对name这一列进行了索引，所以可以实现行级的锁。可以看到T1能够正常进行查询。</p>
+<p><img src="http://img.ameow.xyz/20200703081509.png" alt></p>
+<p>然后用另一个连接也开始一个事务，对这一个数据进行查询。可以看到查询被阻塞了（没有结果返回）。（实际上，等待一段时间（默认50s）后，就会出现当前会话锁等待超时）</p>
+<p><img src="http://img.ameow.xyz/20200703081641.png" alt></p>
+<p>回到第一个窗口继续第一个事务的更新操作，这时候第二个事务中的查询和更新操作继续被阻塞。如果第二个事务查询另一行的数据，则不会被阻塞。</p>
+<p><img src="http://img.ameow.xyz/20200703082835.png" alt></p>
+<p>当第一个事务提交或者回滚时，锁被释放，第二个事务马上可以进行查询和更新操作。</p>
+<p><img src="http://img.ameow.xyz/20200703082919.png" alt></p>
+<h2 id="thinkphp5-0实现"><a href="#thinkphp5-0实现" class="headerlink" title="thinkphp5.0实现"></a>thinkphp5.0实现</h2><p>讲到这么久，终于步入正题。这里也是有一点感慨，实现就两行代码，实际考虑的东西、涉及到的内容远远不止这么点。</p>
+<p>在tp5的用法中比较简单，只需要在链式查询中加入<code>lock(true)</code>就可以。具体代码如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Db::name(<span class="string">'user'</span>)-&gt;where(<span class="string">'id'</span>,<span class="number">1</span>)-&gt;lock(<span class="keyword">true</span>)-&gt;find();</span><br><span class="line"><span class="comment">//指定使用共享锁</span></span><br><span class="line">Db::name(<span class="string">'user'</span>)-&gt;where(<span class="string">'id'</span>,<span class="number">1</span>)-&gt;lock(<span class="string">'lock in share mode'</span>)-&gt;find();</span><br></pre></td></tr></table></figure>
+
+<p>在模型中也可用，用法同数据库方法。</p>
+<h3 id="坑点"><a href="#坑点" class="headerlink" title="坑点"></a>坑点</h3><p>文档中有提到[<sup>9</sup>]</p>
+<blockquote>
+<p>就会自动在生成的SQL语句最后加上 <code>FOR UPDATE</code>或者<code>FOR UPDATE NOWAIT</code>（Oracle数据库）。</p>
+</blockquote>
+<p>说明实现的方法就是加上<code>FOR UPDATE</code>，但没说明是行锁还是表锁，也没有说明要先开启事务才能使用，如果对数据库不够熟悉（例如一年前的我）看到这里就会一脸懵逼。另外，据闻tp6已经实现了乐观锁（？），同时，tp5也可以通过traits来实现乐观锁。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Leslie Leung</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2021/01/09/thinkphp5悲观锁机制处理高并发/">http://yoursite.com/2021/01/09/thinkphp5悲观锁机制处理高并发/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/01/09/ThinkPHP6.0 与5.0的差别及坑点/"></a>
+            
+            
+            <a class="next" rel="next" href="/2021/01/09/一个搜索框的故事/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Leslie Leung |</span>
+        <a href="https://beian.miit.gov.cn/">备案号：粤ICP备19129275号</a>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

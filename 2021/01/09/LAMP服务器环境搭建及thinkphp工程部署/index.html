@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>阿猫的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Ameow&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Ameow&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Leslie Leung</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 9, 2021&nbsp;&nbsp;16:03:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="LAMP服务器环境搭建及工程部署"><a href="#LAMP服务器环境搭建及工程部署" class="headerlink" title="LAMP服务器环境搭建及工程部署"></a>LAMP服务器环境搭建及工程部署</h1><p>这篇文章是我之前讲的环境搭建和项目部署视频讲解的文字版本，由于之前直播录屏的时候没有空闲的服务器进行搭建，所以没有详细的截图等可以展示。</p>
+<p>现在刚好我手头有一台vps刚重装完，记录一下搭建的过程。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>LAMP环境也就是XAMPP的Linux版本，指的是Linux+Apache+Mysql+PHP的组合，是比较经典的建站环境。</p>
+<p>之前提到过，部署LAMP环境主要有以下的几种方式：</p>
+<ul>
+<li>包管理安装（用apt-get、yum等逐个安装Apache、mysql、php）<ul>
+<li>优点：包管理能解决一定的依赖、环境问题</li>
+<li>缺点：不可自定义一些特殊功能，还是会存在一定的环境问题</li>
+</ul>
+</li>
+<li>手动编译安装（下载源码编译安装）<ul>
+<li>优点：完全可自定义（如worker等）</li>
+<li>缺点：需要解决大量的环境问题才能顺利编译，不利于快速部署</li>
+</ul>
+</li>
+<li>一键安装脚本<ul>
+<li>优点：简单快捷，可以选择各个组件的版本，适合新手</li>
+<li>缺点：有自定义组件需求的时候比较麻烦，安全问题（夹带私货、挖矿）</li>
+</ul>
+</li>
+</ul>
+<p>一般学习和普通生产用途基本可以无脑选一键安装脚本，我现在使用的这个脚本（<a href="https://lamp.sh/）我自己已经使用了好几年，一直比较稳定，提供的帮助也挺好，基本按部就班做就可以成功搭建。" target="_blank" rel="noopener">https://lamp.sh/）我自己已经使用了好几年，一直比较稳定，提供的帮助也挺好，基本按部就班做就可以成功搭建。</a></p>
+<p>同时还有一个LNMP（Nginx）的一键安装包（<a href="https://lnmp.org/），也很好用，我后续演示的腾讯云中使用的就是LNMP。两个的差异主要是http服务器分别是Apache和Nginx，这两个的差异大家可以自行研究。" target="_blank" rel="noopener">https://lnmp.org/），也很好用，我后续演示的腾讯云中使用的就是LNMP。两个的差异主要是http服务器分别是Apache和Nginx，这两个的差异大家可以自行研究。</a></p>
+<h2 id="上手"><a href="#上手" class="headerlink" title="上手"></a>上手</h2><p>安装推荐使用交互安装方式（<a href="https://lamp.sh/install.html），可以看到" target="_blank" rel="noopener">https://lamp.sh/install.html），可以看到</a></p>
+<blockquote>
+<p><strong>系统需求</strong></p>
+<ul>
+<li>系统支持：Amazon Linux 2018.03/Fedora 29/CentOS 6+/Debian 8+/Ubuntu 14+</li>
+<li>内存要求：≥ 512MB</li>
+<li>硬盘要求：至少 <strong>5GB</strong> 以上的剩余空间</li>
+<li>服务器必须配置好 <strong>软件源</strong> 和 <strong>可连接外网</strong></li>
+<li>必须具有系统 root 权限</li>
+<li><strong>强烈建议</strong>使用<strong>全新系统</strong>来安装</li>
+</ul>
+<p><strong>支持组件</strong></p>
+<ul>
+<li>支持 PHP 自带<strong>几乎所有</strong>组件</li>
+<li>支持 SQLite、MySQL、MariaDB、Percona Server 数据库</li>
+<li>支持 Yaf（可选安装）</li>
+<li>支持 Redis（可选安装）</li>
+<li>支持 XCache （可选安装）</li>
+<li>支持 Swoole （可选安装）</li>
+<li>支持 Memcached （可选安装）</li>
+<li>支持 ImageMagick （可选安装）</li>
+<li>支持 GraphicsMagick （可选安装）</li>
+<li>支持 ionCube Loader （可选安装）</li>
+<li>自助升级 Apache，PHP，phpMyAdmin，Adminer，MySQL/MariaDB/Percona Server至最新版本</li>
+<li>命令行新增虚拟主机（使用 lamp 命令），操作简便</li>
+<li>支持一键卸载程序（不会删除网站数据）</li>
+</ul>
+</blockquote>
+<p>系统需求方面，如果你使用的是云服务器，基本都能达到使用这个脚本的最低要求（如果达不到，使用编译的方法安装估计也够呛）。同时开发常用的组件（redis、memcached）这些手动安装可能会遇到比较多环境问题的也可以一次性配好，很方便。</p>
+<p>下面开始安装。这里默认读者已经学会使用<strong>ssh</strong>连接到服务器并熟悉一些基本<strong>Linux命令</strong>的操作。其实整个过程只需要按照上面链接的指示复制粘贴命令即可。</p>
+<h3 id="我的环境"><a href="#我的环境" class="headerlink" title="我的环境"></a>我的环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BandwagonHost SPECIAL 10G KVM PROMO V3 - LOS ANGELES - CN2</span><br><span class="line">1C1T 512M</span><br><span class="line">OS:CentOS7</span><br></pre></td></tr></table></figure>
+
+<h3 id="事前"><a href="#事前" class="headerlink" title="事前"></a>事前</h3><p>安装脚本运行所需要的几个依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install wget screen git      // <span class="keyword">for</span> Amazon Linux/CentOS/Fedora</span><br><span class="line">apt-get -y install wget screen git  // <span class="keyword">for</span> Debian/Ubuntu</span><br></pre></td></tr></table></figure>
+
+<p>我的环境是CentOS，所以选择上面的yum命令执行。</p>
+<p><img src="http://img.ameow.xyz/20200327023852.png" alt></p>
+<p>然后下载脚本、赋予权限</p>
+<p><img src="http://img.ameow.xyz/20200327023851.png" alt></p>
+<h3 id="动手"><a href="#动手" class="headerlink" title="动手"></a>动手</h3><p>接下来就可以开始安装了，这里也可以看到自己服务器的配置信息</p>
+<p><img src="http://img.ameow.xyz/20200327024121.png" alt></p>
+<p>接下来就是一连串的选择了，Apache这里选择1或者直接回车（只有这个了）。httpd是Apache服务器的别名。</p>
+<p><img src="http://img.ameow.xyz/20200327024337.png" alt></p>
+<p>这里可以选择一些apache的module，这是脚本安装唯一的自定义性。用不到，所以继续回车默认不安装。</p>
+<p><img src="http://img.ameow.xyz/20200327024559.png" alt></p>
+<p>接下来这里可以选择mysql和php的版本，mysql建议选5.7，8.0刚出稳定性和社区支持还没到位，php也是选择默认的7.3即可。注意mysql可以自定义数据路径，如果有需求可以自定义，一般直接默认一路回车即可。<strong>注意！！！这里设置的mysql root password一定要记住！</strong></p>
+<p><img src="http://img.ameow.xyz/20200327024910.png" alt></p>
+<p>接下来有PHP组件和PHPmyadmin可选，我的项目用到了redis和memcached，所以两个都选择上。phpmyadmin则选择默认即可。</p>
+<p><img src="http://img.ameow.xyz/20200327025043.png" alt></p>
+<p>最后一步还有一个Kod什么的可选，我用不到，就不装。然后到这个界面，还可以看到一次mysql 的Root Password，一定要记住。看过没有问题，就可以按任意键开始安装。接下来就是一段漫长的滚代码，时间取决于你服务器的性能和网络环境等。现在就可以开始挂一会儿机了。到最后会提示安装完成。</p>
+<blockquote>
+<p>最后这台机器因为内存不足（可以看到上面只有&lt;512M）所以没有办法完成php的编译安装，所以后面的内容我会使用已经安装好LAMP环境的另一台腾讯云演示。</p>
+</blockquote>
+<blockquote>
+<p>KodExplorer后面发现是一个商业软件，类似云盘之类的东西，应该是作者的恰饭，有需要可以看看，建议选择不要安装。</p>
+</blockquote>
+<h3 id="虚拟主机添加（可选）"><a href="#虚拟主机添加（可选）" class="headerlink" title="虚拟主机添加（可选）"></a>虚拟主机添加（可选）</h3><blockquote>
+<ol>
+<li>安装 LAMP 环境</li>
+<li>添加虚拟主机。运行命令：lamp add<br>（如果只建一个站，则可以直接将网站程序上传至 /data/www/default 目录下即可）</li>
+<li>上传并解压网站程序到网站目录，默认位置为：/data/www/网站域名/</li>
+<li>更改网站目录权限。以 root 用户登录，运行：chown -R apache:apache /data/www/网站域名/</li>
+<li>运行网站安装程序完成网站安装</li>
+</ol>
+</blockquote>
+<p>这里虚拟主机的意思是你可以绑定多个域名（要先修改域名解析到这个服务器的ip），每个域名各自有一个网站根目录，通过域名直接能访问到不同的网站，但其实还是在同一台服务器上。如果你没有域名，可以直接用ip作为域名。（没必要）</p>
+<p>同时，这个脚本里也提供了一键配置https（ssl证书）的功能，只需要上传证书就可以完成配置。</p>
+<h2 id="工程部署"><a href="#工程部署" class="headerlink" title="工程部署"></a>工程部署</h2><blockquote>
+<p><strong>程序目录：</strong></p>
+<ul>
+<li>MySQL 安装目录： /usr/local/mysql</li>
+<li>MySQL 数据库目录： /usr/local/mysql/data（默认路径，安装时可更改）</li>
+<li>MariaDB 安装目录： /usr/local/mariadb</li>
+<li>MariaDB 数据库目录： /usr/local/mariadb/data（默认路径，安装时可更改）</li>
+<li>Percona 安装目录： /usr/local/percona</li>
+<li>Percona 数据库目录： /usr/local/percona/data（默认路径，安装时可更改）</li>
+<li>PHP 安装目录： /usr/local/php</li>
+<li>Apache 安装目录： /usr/local/apache</li>
+<li>phpMyAdmin 安装目录： /data/www/default/phpmyadmin</li>
+<li>KodExplorer 安装目录： /data/www/default/kod</li>
+</ul>
+<p><strong>网站目录：</strong></p>
+<ul>
+<li>默认的网站根目录： /data/www/default</li>
+<li>默认页位置： /data/www/default/index.html</li>
+<li>新建网站默认目录： /data/www/网站域名</li>
+<li>phpmyadmin 后台地址： http://域名或IP/phpmyadmin/</li>
+<li>phpmyadmin 默认用户名：root 默认密码：root<br>（<strong>注：</strong>此密码为 MySQL 的 root 密码。在安装时会要求输入，如不输入则为默认密码 root）</li>
+<li>XCache 后台地址： http://域名或IP/xcache/</li>
+<li>XCache 默认用户名：admin 默认密码：123456<br>（<strong>注：</strong>用户名和密码在配置文件 /usr/local/php/php.d/xcache.ini 中定义）</li>
+</ul>
+<p><strong>配置文件：</strong></p>
+<ul>
+<li>Apache 日志目录： /usr/local/apache/logs</li>
+<li>新建网站日志目录： /data/wwwlog/网站域名</li>
+<li>Apache 默认 SSL 配置文件： /usr/local/apache/conf/extra/httpd-ssl.conf</li>
+<li>新建网站配置文件： /usr/local/apache/conf/vhost/网站域名.conf</li>
+<li>PHP 配置文件： /usr/local/php/etc/php.ini</li>
+<li>PHP 所有扩展配置文件目录: /usr/local/php/php.d/</li>
+<li>MySQL 配置文件： /etc/my.cnf</li>
+</ul>
+</blockquote>
+<p>这里有所有的目录的位置。可以看到，默认的网站根目录在<code>/data/www/default</code>，这个就相当于win下xampp的<code>htdocs</code>文件夹。（如果你配置了虚拟主机，那么根目录在<code>/data/www/YOUR_DOMAIN_NAME</code>）</p>
+<p>与win下部署方式类似，只需要把php工程文件夹拷贝到网站根目录即可。（题外话：我有前辈以及一些同学习惯直接把项目建在htdocs下，或者整个htdocs就是一个项目，我不提倡这种做法，会对项目管理造成混乱，不是很好的开发习惯。）</p>
+<p>传输文件我一般使用PHPstorm的<code>Deployment</code>功能或者使用<code>winscp</code>进行文件的传输。接下来分别介绍一下。</p>
+<h3 id="winscp"><a href="#winscp" class="headerlink" title="winscp"></a>winscp</h3><p>文件传输我习惯用winscp，这个软件十分简洁，就是一个单纯的文件管理器，没有其他太多的功能，通过sftp协议传输文件，不用另外配置。当然如果你有部署ftp服务，也可以使用其他一些ftp软件如FileZilla等进行管理。</p>
+<p>进入winscp，配置好连接，然后点击登录即可。</p>
+<p><img src="http://img.ameow.xyz/20200327135015.png" alt></p>
+<p>服务器端（右边）来到<code>/data/www/default</code>(或你的网站根目录，我这里使用的是LNMP，根目录在<code>/home/wwwroot/xxx</code>)。本地端（左边）可以打开到相应的项目目录，也可以用文件管理器打开到相应的项目目录。</p>
+<p><img src="http://img.ameow.xyz/20200327135818.png" alt></p>
+<p>将要部署的项目直接拖过去右边/从文件管理器拖过去右边。</p>
+<p>如果是更新文件，则选择全部选是，进行替换。</p>
+<p><img src="http://img.ameow.xyz/20200327140303.png" alt></p>
+<p>到这里就完成了。</p>
+<h3 id="Deployment（jetbrain系IDE可用）"><a href="#Deployment（jetbrain系IDE可用）" class="headerlink" title="Deployment（jetbrain系IDE可用）"></a>Deployment（jetbrain系IDE可用）</h3><p>首先需要进行一定的配置。同样以这个tutorial项目为例。</p>
+<p>在工具栏找到<code>Tools-&gt;Deployment-&gt;Configuration...</code></p>
+<p><img src="http://img.ameow.xyz/20200327140600.png" alt></p>
+<p>在弹出的窗口中点击左上角+号，选择sftp，然后输入相应的信息，点击Test Connection，如果成功说明没有问题。</p>
+<p><img src="http://img.ameow.xyz/20200327140747.png" alt></p>
+<p>接下来点击Mappings选项卡。选择或输入远程的路径，点确认。</p>
+<p><img src="http://img.ameow.xyz/20200327141014.png" alt></p>
+<p>最后，如果你使用的是thinkphp框架，需要排除掉runtime和vendor文件夹（里面放的是运行时文件，容量比较大，而且环境不同没必要同步）。这里需要注意本地路径需要使用绝对路径。</p>
+<p>（这里用了另外一个项目的例子，懒得再写了）</p>
+<p><img src="http://img.ameow.xyz/20200327141330.png" alt></p>
+<p>配置好后，每次需要上传时，点击里面的upload即可。Sync有代码diff功能，也可以使用这个。</p>
+<p><img src="http://img.ameow.xyz/20200327141543.png" alt></p>
+<p>过程到这里就结束了，希望能帮助大家顺利完成部署。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Leslie Leung</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2021/01/09/LAMP服务器环境搭建及thinkphp工程部署/">http://yoursite.com/2021/01/09/LAMP服务器环境搭建及thinkphp工程部署/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2021/01/09/RESTful还是JSON-RPC？/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Leslie Leung |</span>
+        <a href="https://beian.miit.gov.cn/">备案号：粤ICP备19129275号</a>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

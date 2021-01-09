@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>阿猫的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Ameow&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Ameow&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Leslie Leung</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 9, 2021&nbsp;&nbsp;16:03:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="RESTful还是JSON-RPC？"><a href="#RESTful还是JSON-RPC？" class="headerlink" title="RESTful还是JSON-RPC？"></a>RESTful还是JSON-RPC？</h1><p>最近突然被问到：“现在用的都是RESTful的接口吗？”一下子被问得有点蒙， 我确实在很多开发文档里见过REST、RESTful等等字眼，但我自己在用的却好像并不是RESTful的API。那我在用的是什么？与RESTful孰好孰坏？</p>
+<h2 id="我们在说RESTful和JSON-RPC的时候在讨论什么"><a href="#我们在说RESTful和JSON-RPC的时候在讨论什么" class="headerlink" title="我们在说RESTful和JSON-RPC的时候在讨论什么"></a>我们在说RESTful和JSON-RPC的时候在讨论什么</h2><p>首先需要明确的是，RESTful和JSON-RPC都不是指软件库、框架之类的东西，也不是设计模式（与MVC模式等无关），只是一种<strong>代码风格</strong>。</p>
+<p>这两个都属于<strong>Web Service模型</strong>，用于帮助人们解决应用程序与服务器<strong>传递数据</strong>的问题，详细细分大致如下：</p>
+<ul>
+<li>SOA模型（面向消息）</li>
+<li>RPC模型（面向方法）<ul>
+<li>XML-RPC</li>
+<li>JSON-RPC</li>
+<li>SOAP+WSDL</li>
+</ul>
+</li>
+<li>REST模型（面向资源）</li>
+</ul>
+<p>当前而言，比较实际的基本只剩下JSON-RPC与REST两个比较流行的做法。</p>
+<p>下面详细讲一下RESTful和JSON-RPC分别是什么，以及涉及到的一些知识点。</p>
+<h2 id="RESTful和JSON-PRC是什么"><a href="#RESTful和JSON-PRC是什么" class="headerlink" title="RESTful和JSON-PRC是什么"></a>RESTful和JSON-PRC是什么</h2><h3 id="RESTful"><a href="#RESTful" class="headerlink" title="RESTful"></a>RESTful</h3><p>REST，即Representational State Transfer。总结来说，就是</p>
+<ol>
+<li>每一个URI代表一种资源</li>
+<li>客户端和服务器之间，传递这种资源的某种表现层</li>
+<li>客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”</li>
+</ol>
+<p>这也是区别于RPC的面向方法，REST是面向资源的。</p>
+<p>详细的内容可以参考这两篇文章：<a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="noopener">理解RESTful架构</a>，<a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="noopener">RESTful API 设计指南</a></p>
+<p>举例（来源 <a href="https://www.zhihu.com/question/28570307/answer/549218509" target="_blank" rel="noopener">WEB开发中，使用JSON-RPC好，还是RESTful API好？ - 邵励治的回答 - 知乎</a>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">作者：邵励治</span><br><span class="line">链接：https://www.zhihu.com/question/28570307/answer/549218509</span><br><span class="line">来源：知乎</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br><span class="line"></span><br><span class="line">API : Create News</span><br><span class="line">URL :</span><br><span class="line">    https://xxx.xxx.xxx.xxx/api/v2/news</span><br><span class="line">METHOD : </span><br><span class="line">    POST</span><br><span class="line">PARAMETERS : </span><br><span class="line">    name : String</span><br><span class="line">    content : String</span><br><span class="line">RETURN : </span><br><span class="line">    STATUS : 200 OK</span><br><span class="line">    JSON :</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;newsId&quot; : &quot;xxxxxx&quot;,</span><br><span class="line">        &quot;name&quot; : &quot;xxxx&quot;,</span><br><span class="line">        &quot;content&quot; : &quot;xxxx&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">API : Get Single News</span><br><span class="line">URL : </span><br><span class="line">    https://xxx.xxx.xxx.xxx/api/v2/news/:newsId</span><br><span class="line">METHOD : </span><br><span class="line">    GET</span><br><span class="line">RETURN :</span><br><span class="line">    STATUS : 200 OK</span><br><span class="line">    JSON :</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;newsId&quot; : &quot;xxxxxx&quot;,</span><br><span class="line">        &quot;name&quot; : &quot;xxxx&quot;,</span><br><span class="line">        &quot;content&quot; : &quot;xxxx&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">API : Edit News</span><br><span class="line">URL : </span><br><span class="line">    https://xxx.xxx.xxx.xxx/api/v2/news/:newsId</span><br><span class="line">METHOD : </span><br><span class="line">    PATCH</span><br><span class="line">PARAMETERS : </span><br><span class="line">    name : String</span><br><span class="line">    content : String</span><br><span class="line">RETURN :</span><br><span class="line">    STATUS : 200 OK</span><br><span class="line">    JSON :</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;newsId&quot; : &quot;xxxxxx&quot;,</span><br><span class="line">        &quot;name&quot; : &quot;xxxx&quot;,</span><br><span class="line">        &quot;content&quot; : &quot;xxxx&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">API : List News</span><br><span class="line">URL : </span><br><span class="line">    https://xxx.xxx.xxx.xxx/api/v2/news</span><br><span class="line">METHOD : </span><br><span class="line">    GET</span><br><span class="line">RETURN : </span><br><span class="line">    STATUS : 200 OK</span><br><span class="line">    JSON : </span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;newsId&quot; : &quot;xxxxxx&quot;,</span><br><span class="line">            &quot;name&quot; : &quot;xxxx&quot;,</span><br><span class="line">            &quot;content&quot; : &quot;xxxx&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;newsId&quot; : &quot;xxxxxx&quot;,</span><br><span class="line">            &quot;name&quot; : &quot;xxxx&quot;,</span><br><span class="line">            &quot;content&quot; : &quot;xxxx&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        ......（省略）</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<p>比较简单地说就是，大家请求一样的url（GET方法有一个例外，url中带了一个id），通过不同的请求方法，分别进行不同的操作（CRUD）。</p>
+<h3 id="JSON-RPC"><a href="#JSON-RPC" class="headerlink" title="JSON-RPC"></a>JSON-RPC</h3><p>JSON-RPC是一个无状态且轻量级的远程过程调用（RPC）传送协议，通过JSON传递内容。远程过程调用意思就是，用函数思维写API，用JSON传值，返回一个JSON。</p>
+<p>同样举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">API : getNewsName</span><br><span class="line">URL : </span><br><span class="line">    https://xxx.xxx.xxx.xxx/api/v1/getNewsName</span><br><span class="line">METHOD : </span><br><span class="line">    POST</span><br><span class="line">PARAMETERS : </span><br><span class="line">    newsId : String</span><br><span class="line">RETURN : </span><br><span class="line">    &#123;</span><br><span class="line">        &quot;username&quot; : &quot;shaolizhi&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">作者：邵励治</span><br><span class="line">链接：https://www.zhihu.com/question/28570307/answer/549218509</span><br><span class="line">来源：知乎</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<p>等同于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getNewsName( newsId : String ) : String</span><br></pre></td></tr></table></figure>
+
+<h2 id="该用哪种？"><a href="#该用哪种？" class="headerlink" title="该用哪种？"></a>该用哪种？</h2><p>写这篇文章前，我看了知乎上这样一个问题<a href="https://www.zhihu.com/question/28570307" target="_blank" rel="noopener">WEB开发中，使用JSON-RPC好，还是RESTful API好？</a>，可能有这么一个小规律：前端喜欢REST，后端喜欢JSON-RPC。</p>
+<p>下面有一些在看了一些博客、回答以及结合自身开发经验的见解，如有谬误，欢迎指正。</p>
+<h3 id="RESTful的逻辑思维比较难转换"><a href="#RESTful的逻辑思维比较难转换" class="headerlink" title="RESTful的逻辑思维比较难转换"></a>RESTful的逻辑思维比较难转换</h3><p>初学coding，比较定式的是函数的思维，考虑的是输入什么、输出什么。而RESTful面向资源的思维在写一些功能的时候就会比较别扭，考虑以下例子：写一个根据uid获取用户信息的接口。</p>
+<ul>
+<li>JSON-RPC：输入用户的uid，输出用户的信息</li>
+<li>REST：先用POST方法创建一个资源（查询），再GET请求一个资源（刚才创建的查询）</li>
+</ul>
+<p>相比之下，REST的一个问题就暴露出来：一定要把所有东西都变成<strong>资源</strong>，然后再要把对应的操作映射成“增删改查”（HTTP的四个方法）。有时候一些很简单的功能，例如一个登录的功能，使用RESTful的话就会演变成十分复杂的问题，化简为繁没必要。</p>
+<h3 id="RESTful-在业务简单、有大量静态资源的情况下有优势"><a href="#RESTful-在业务简单、有大量静态资源的情况下有优势" class="headerlink" title="RESTful 在业务简单、有大量静态资源的情况下有优势"></a>RESTful 在业务简单、有大量静态资源的情况下有优势</h3><p>在研究过程中我看到了许多例子，都是用的博客、新闻之类的网站应用举的例子，实际上这些比较共同的特点就是里面有比较多的静态资源，而且业务逻辑相对比较简单，可以用简单的CRUD就能搞定了。那么优势在哪里呢？</p>
+<p>例如获取某一篇文章的接口，因为请求某个资源，所以这个接口应该会使用GET方法，在url中直接带上文章的id来获取文章。</p>
+<p>这里就需要引入GET和POST的异同了。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">GET</th>
+<th>POST</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">后退按钮/刷新</td>
+<td align="center">无害</td>
+<td>数据会被重新提交（浏览器应该告知用户数据会被重新提交）。</td>
+</tr>
+<tr>
+<td align="left">书签</td>
+<td align="center">可收藏为书签</td>
+<td>不可收藏为书签</td>
+</tr>
+<tr>
+<td align="left">缓存</td>
+<td align="center">能被缓存</td>
+<td>不能缓存</td>
+</tr>
+<tr>
+<td align="left">编码类型</td>
+<td align="center">application/x-www-form-urlencoded</td>
+<td>application/x-www-form-urlencoded 或 multipart/form-data。为二进制数据使用多重编码。</td>
+</tr>
+<tr>
+<td align="left">历史</td>
+<td align="center">参数保留在浏览器历史中。</td>
+<td>参数不会保存在浏览器历史中。</td>
+</tr>
+<tr>
+<td align="left">对数据长度的限制</td>
+<td align="center">是的。当发送数据时，GET 方法向 URL 添加数据；URL 的长度是受限制的（URL 的最大长度是 2048 个字符）。</td>
+<td>无限制。</td>
+</tr>
+<tr>
+<td align="left">对数据类型的限制</td>
+<td align="center">只允许 ASCII 字符。</td>
+<td>没有限制。也允许二进制数据。</td>
+</tr>
+<tr>
+<td align="left">安全性</td>
+<td align="center">与 POST 相比，GET 的安全性较差，因为所发送的数据是 URL 的一部分。在发送密码或其他敏感信息时绝不要使用 GET ！</td>
+<td>POST 比 GET 更安全，因为参数不会被保存在浏览器历史或 web 服务器日志中。</td>
+</tr>
+<tr>
+<td align="left">可见性</td>
+<td align="center">数据在 URL 中对所有人都是可见的。</td>
+<td>数据不会显示在 URL 中。</td>
+</tr>
+</tbody></table>
+<p>比较显而易见的就是，GET请求可以被缓存。意思是，如果有一个人向web服务器GET请求，那么这个请求会被缓存起来，下一个同样的GET的时候，就会从缓存中取出上一次的返回，在高并发场景下缓存的引入能够有效提高性能。如果使用POST JSON的方法，每次web服务器都需要去调用底下的PHP或者Java之类，会增大开销。</p>
+<p>另外一个比较细微的地方是，POST实际需要两次TCP，而GET只需要一次。尽管实践证明两种方法在网络良好时差距不大，但或多或少是一个优化的点。</p>
+<p>然而考虑另外一个场景：搜索一篇文章。</p>
+<p>首先这里缓存的意义就没有那么大了，每个用户输入的关键词可能都会不一样，之前的缓存优势没有了。然后，如果搜索中有多个条件，有可能会超出URL的上限（URL最大长度2048），还可能因为搜索条件中有中文等特殊字符出现编码等问题，且搜索中不能包含敏感信息之类，比较麻烦。可能有人会说，GET也可以在Body里面放JSON呀！标准来说GET应该是没有Body的，对比RESTful追求的“规范”有一些打脸。另外也没有办法解决上限的问题，可以说POST一个JSON可以<strong>一劳永逸</strong>。</p>
+<h3 id="RESTful在规范、文档编写等比较方便"><a href="#RESTful在规范、文档编写等比较方便" class="headerlink" title="RESTful在规范、文档编写等比较方便"></a>RESTful在规范、文档编写等比较方便</h3><p>说实话这个也是见仁见智。在前后端分离开发里，接口文档、接口的结构本来就需要前后端开发比较积极地商量沟通。相对而言，RESTful比较“前端主导”，RPC比较“后端主导”。也有说法是RESTful对外，RPC对内的（这里我对内外的理解是，外指团队、公司外，内指团队内、前后端间）。</p>
+<p>但是RESTful更规范化是肯定的，可以参考<a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="noopener">RESTful API 设计指南</a>，且有现成的工具可以生成API文档。而JSON-RPC则比较宽松，具体的结构可以有组织、公司的规范，也会有个人的习惯、喜好。</p>
+<p>然而在实际开发中我一直使用的JSON-RPC在前后端沟通、文档编写中都比较顺利。这里顺带安利一个API文档工具<a href="http://www.docway.net/" target="_blank" rel="noopener">DOCWAY</a>（以前叫小幺鸡），支持团队协作，简单好用。</p>
+<h3 id="GET？POST？"><a href="#GET？POST？" class="headerlink" title="GET？POST？"></a>GET？POST？</h3><p>这个是研究这两个方式的时候衍生出的另一个问题：什么时候用GET？什么时候用POST？</p>
+<p>毫无疑问，GET适合获取静态资源，通过QueryString获取参数；而传递JSON、包含敏感信息等应该用POST。但再来看两个我觉得比较经典的、微信开发文档的例子：</p>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html" target="_blank" rel="noopener">getAccessToken</a></p>
+<p><img src="http://img.ameow.xyz/20200405173643.png" alt></p>
+<p>这是一个获取AccessToken的接口，这里就使用了GET的方法，我觉得原因有以下几个</p>
+<ol>
+<li>传递的都是ASCII字符，不受GET方法的限制</li>
+<li>appid和secret已经是相对乱码，也没有加密的必要</li>
+<li>接口的功能比较简单，参数固定</li>
+<li>请求的频率会比较高（考虑每次操作都需要这个token，且token比较容易过期）</li>
+</ol>
+<p>再看另一个发送消息的接口。</p>
+<p><a href="[https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html#%E4%BA%91%E8%B0%83%E7%94%A8](https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.send.html#云调用)">subscribeMessage.send</a></p>
+<p><img src="http://img.ameow.xyz/20200405174113.png" alt></p>
+<p>这个接口就使用了POST的方法（尽管也有一个参数在url中）。分析如下</p>
+<ol>
+<li>需要传递的内容较多，且可能有中文、特殊字符等，可能会超出GET的长度和字符限制</li>
+<li>这里access_token没有放在json中，而是放在了url里。从功能上看这个放在json和url里都没有问题，可能是为了方便开发，服务端可以直接把前端送过来的json数据直接再传递给微信接口</li>
+<li>接口结构比较复杂，而且多变。发送的消息根据模板可以有不一样的结构（每个模板的可以填的空、空的类型之类都不一样）</li>
+<li>请求的频率比较低（不一定，不好做判断）</li>
+</ol>
+<p>通过这个例子应该比较好理解。</p>
+<h2 id="到底咋办？"><a href="#到底咋办？" class="headerlink" title="到底咋办？"></a>到底咋办？</h2><p>最近RESTful真的非常流行，但不要觉得我不用RESTful我就OUT了，我做的这个就不好。两者没有高下之分，只是两种不同的convention，习惯哪个就用哪个就好了，没必要盲目跟风非要用RESTful，又没理解透，最后做出来一个混搭产物REFU（Remove Extension From Url）。</p>
+<p>我个人的习惯是用JSON-RPC（现在才知道的词，用了很久都不知道自己的做法叫什么，有点不好意思）。但是RESTful可以有一点参考作用，在做一些静态资源的功能的时候可以考虑使用GET搭配RESTful-like的API作为优化。</p>
+<p>另外实际上使用REST的方法也比较简单，在Springboot中，只需要加上<code>@RestController</code>和修改<code>@RequestMapping</code>即可；在thinkphp中可以通过修改路由的方式实现RESTful。</p>
+<h2 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h2><p><a href="https://www.zhihu.com/question/28570307" target="_blank" rel="noopener">WEB开发中，使用JSON-RPC好，还是RESTful API好？ - 知乎</a></p>
+<p><a href="https://www.w3school.com.cn/tags/html_ref_httpmethods.asp" target="_blank" rel="noopener">HTTP 方法：GET 对比 POST</a></p>
+<p><a href="https://graphql.cn/" target="_blank" rel="noopener">GraphQL</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Leslie Leung</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2021/01/09/RESTful还是JSON-RPC？/">http://yoursite.com/2021/01/09/RESTful还是JSON-RPC？/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/01/09/LAMP服务器环境搭建及thinkphp工程部署/"></a>
+            
+            
+            <a class="next" rel="next" href="/2021/01/09/ThinkPHP6.0 与5.0的差别及坑点/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Leslie Leung |</span>
+        <a href="https://beian.miit.gov.cn/">备案号：粤ICP备19129275号</a>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

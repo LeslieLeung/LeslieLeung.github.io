@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>阿猫的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Ameow&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Ameow&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Leslie Leung</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 9, 2021&nbsp;&nbsp;16:03:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="搜索框的数据库实现思路和分析"><a href="#搜索框的数据库实现思路和分析" class="headerlink" title="搜索框的数据库实现思路和分析"></a>搜索框的数据库实现思路和分析</h1><p>最近遇到了一个问题：搜索框怎么实现？具体来说，数据库查询层面怎么实现？恰好最近在做的项目中也有这个功能，于是进行了一些探索和尝试。</p>
+<h2 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h2><p>搜索框一般是对一个或多个字段进行模糊/精确匹配的一个功能。最简单的搜索框是对一个字段进行精确匹配，直接<strong>WHERE</strong>然后<strong>=</strong>就行了，要实现模糊匹配，可以把=换成LIKE，然后把条件加上通配符%。这个方法同样适用于下拉框（性质和搜索是一样的，只是前端已经预设好查询的内容）。</p>
+<p>比较复杂但也是比较常见的搜索框，一般是多个字段的模糊/精确匹配。这篇文章主要讨论的就是这种比较复杂的搜索框。从一个字段延伸到多个字段，最显而易见的办法就是用<strong>OR</strong>把各个字段连接起来，用=/LIKE作判断。</p>
+<h2 id="（笨方法）想当然法"><a href="#（笨方法）想当然法" class="headerlink" title="（笨方法）想当然法"></a>（笨方法）想当然法</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>想当然法是单个搜索框的延伸，也是我最开始使用的方法。用一个表（可以把它叫做搜索表），把需要搜索的信息（字段）全部放在一起。查询的时候用=/LIKE作判断，用OR把各个字段连接起来。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line"><span class="keyword">name</span> <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span> <span class="keyword">OR</span></span><br><span class="line">student_number <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span> <span class="keyword">OR</span></span><br><span class="line">id_card <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span> <span class="keyword">OR</span></span><br><span class="line">phone <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span> <span class="keyword">OR</span></span><br><span class="line">dorm <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span></span><br></pre></td></tr></table></figure>
+
+<p>Java</p>
+<p>（最后加了一个LIMIT做分页）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">search</span><span class="params">(String content, String college, <span class="keyword">int</span> page, <span class="keyword">int</span> pageSize)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    String sql = <span class="string">"SELECT name,student_number,college,major FROM student_info_2019"</span>;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">""</span>.equals(college) || !<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">        sql += <span class="string">" WHERE"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">""</span>.equals(college)) &#123;</span><br><span class="line">        sql += <span class="string">" college = '"</span> + college + <span class="string">"'"</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">            sql += <span class="string">" AND"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">        sql += <span class="string">" name LIKE '"</span> + content + <span class="string">"' OR student_number = '"</span> + content + <span class="string">"' OR id_card = '"</span></span><br><span class="line">                + content + <span class="string">"' OR phone = '"</span> + content + <span class="string">"' OR dorm = '"</span> + content + <span class="string">"'"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sql += <span class="string">" LIMIT "</span> + page * pageSize + <span class="string">" ,"</span> + pageSize + <span class="string">";"</span>;</span><br><span class="line">    <span class="keyword">return</span> sql;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>先看看性能。</p>
+<p>（以下测试使用的都是2w行的学生信息数据，查询时间均使用三次取平均的方式计算。）</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.072</td>
+<td>0.068</td>
+<td>0.068</td>
+<td>0.069</td>
+</tr>
+</tbody></table>
+<p>查询时间是可接受的范围。但是有一个问题，这个表不符合第一范式，也就是说有太多冗余的字段。</p>
+<p>那么是不是还可以其他的表按照第一范式设计，但专门开设一个搜索表，用来存储搜索的信息呢？（甚至还有一个好处，输出的时候不需要再对字段进行处理）所以来到第二个办法。</p>
+<h2 id="（笨方法改进）独立设搜索表"><a href="#（笨方法改进）独立设搜索表" class="headerlink" title="（笨方法改进）独立设搜索表"></a>（笨方法改进）独立设搜索表</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>专门开设一个搜索表来存储要搜索的信息，但需要与其他几个对应表保持同步。这里同步可以在对其他几个对应的表进行修改时同时修改搜索表中的内容（再执行一次查询）也可以通过触发器来保持同步。</p>
+<p>因为这种方法实在太笨而且繁琐，就不实现了。</p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>这个方法会有严重的性能问题（尤其是高并发的时候），最致命的地方就是需要多一次查询来进行同步。同时这个表是完完全全的冗余，数据量大时存储空间的开销十分可观。</p>
+<p>另外，在查询时，如果字段数量很多，可能需要写很多的OR，另外需要给所有这些字段建立索引。这时候考虑到，可以引进全文搜索。</p>
+<h2 id="（使用全文检索）独立设搜索表"><a href="#（使用全文检索）独立设搜索表" class="headerlink" title="（使用全文检索）独立设搜索表"></a>（使用全文检索）独立设搜索表</h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><p>通过恰当地建立索引，可能可以有效提高查询的效率。</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>需要注意的是，5.7之前的mysql只有MyISAM引擎可以使用全文检索，而MyISAM引擎不支持事务（transaction）；5.7之后的mysql的Innodb引擎也可以使用全文检索了。</p>
+<p>执行查询前需要添加索引，字段选择需要搜索的字段，索引类型选择FULLTEXT。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> student</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">MATCH</span> (<span class="keyword">name</span>,student_number,id_card,phone,dorm) AGAINST (<span class="string">'2018100xxxx'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>（敏感信息打码处理）</p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>性能上确实比前面的方法有所提升（事实上是所有方法中性能最高的）。</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.044</td>
+<td>0.032</td>
+<td>0.033</td>
+<td>0.036</td>
+</tr>
+</tbody></table>
+<p>然而这个方法最后实现的是伪模糊查询，只能实现字段的模糊，不能实现搜索内容的模糊（即只能对搜索内容进行精确匹配，如2018100abcd精确匹配2018100abcd而不能通过2018100匹配到所有的2018100xxxx）。</p>
+<p>还有另外一个致命问题是，全文检索对中文的支持不是太好，会出现问题。如果有搜索中文的需求，全文检索不太适合。</p>
+<h2 id="（最终采用）无痛法"><a href="#（最终采用）无痛法" class="headerlink" title="（最终采用）无痛法"></a>（最终采用）无痛法</h2><h3 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h3><p>经过前面那些改进，基本确定了一个完美（伪）的方法必须满足下面的要求</p>
+<ol>
+<li>满足第一范式（不能有冗余）</li>
+<li>查询效率要高（尽量接近全文检索）</li>
+<li>能实现（真）模糊查询</li>
+<li>对中文支持要好</li>
+<li>写起来要方便优雅（不需要写一大堆OR）</li>
+</ol>
+<p>所以把这个表拆分成了两个，查询时使用连接，同时优化WHERE语句。</p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><p>SQL</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * </span><br><span class="line"><span class="keyword">FROM</span> student s</span><br><span class="line"><span class="keyword">JOIN</span> student_info si <span class="keyword">ON</span> s.student_number=si.student_number</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">CONCAT</span>(s.name,s.student_number,phone,id_card) <span class="keyword">LIKE</span> <span class="string">'%2018100%'</span></span><br></pre></td></tr></table></figure>
+
+<p>Java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">search</span><span class="params">(String content, String college, <span class="keyword">int</span> page, <span class="keyword">int</span> pageSize)</span> </span>&#123;</span><br><span class="line">            StringBuilder sql = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">            sql.append(<span class="string">"SELECT * FROM student s "</span>);</span><br><span class="line">            sql.append(<span class="string">"JOIN student_info si ON s.student_number=si.student_number"</span>);</span><br><span class="line">            <span class="keyword">if</span> (!<span class="string">""</span>.equals(college) || !<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">                sql.append(<span class="string">" WHERE"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="string">""</span>.equals(college)) &#123;</span><br><span class="line">                sql.append(<span class="string">" college='"</span>).append(college).append(<span class="string">"'"</span>);</span><br><span class="line">                <span class="keyword">if</span> (!<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">                    sql.append(<span class="string">" AND"</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="string">""</span>.equals(content)) &#123;</span><br><span class="line">                sql.append(<span class="string">" CONCAT(s.name,s.student_number,phone,id_card) LIKE '%"</span>).append(content).append(<span class="string">"%'"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            sql.append(<span class="string">" LIMIT "</span>).append(page * pageSize).append(<span class="string">" ,"</span>).append(pageSize).append(<span class="string">";"</span>);</span><br><span class="line">            <span class="keyword">return</span> sql.toString();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>ps. 这里用StringBuilder而不是String的原因是StringBuilder的性能比String高（String每次操作都会新建对象），但StringBuilder不是线程安全的，在多线程环境下应使用StringBuffer。</p>
+<h3 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h3><p>还是先看看性能。（这里顺便与使用了CONCAT之后的“笨方法”比较）</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>笨方法</td>
+<td>0.065</td>
+<td>0.065</td>
+<td>0.066</td>
+<td>0.065</td>
+</tr>
+<tr>
+<td>新方法</td>
+<td>0.084</td>
+<td>0.089</td>
+<td>0.086</td>
+<td>0.086</td>
+</tr>
+</tbody></table>
+<p>竟然还是笨方法好？这里提出一个猜测，前面的一堆OR在实际执行查询的时候是被优化了，而使用CONCAT可能就是之前执行的优化，所以使用CONCAT之后对比OR有一点点的提升。</p>
+<p>当然这个最终采用的方法不会产生冗余，查询性能相差也不大，所以才最终采用！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然最终采用的是多表连接、优化WHERE的查询方法，但是单从性能上说，单表全文索引&gt;单表模糊&gt;多表连接。全文索引对中文支持差、不能实现真模糊、同样存在单独搜索表的问题，但性能明显翻倍。单独搜索表可以实现真模糊、性能也适中，但是冗余开销较大、需要解决同步问题。多表连接是最无痛的方法，但是性能偏低。但当前这个项目对高并发没有要求，也不要求很高的反应速度，因此使用了比较规范的无痛方法。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Leslie Leung</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2021/01/09/一个搜索框的故事/">http://yoursite.com/2021/01/09/一个搜索框的故事/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/01/09/thinkphp5悲观锁机制处理高并发/"></a>
+            
+            
+            <a class="next" rel="next" href="/2019/12/30/hello-world/">Hello World</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Leslie Leung |</span>
+        <a href="https://beian.miit.gov.cn/">备案号：粤ICP备19129275号</a>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

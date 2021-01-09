@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+
+<title>阿猫的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Ameow&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Ameow&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title"></h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Leslie Leung</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">January 9, 2021&nbsp;&nbsp;16:03:08</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="ThinkPHP6-0-与5-0的差别及坑点"><a href="#ThinkPHP6-0-与5-0的差别及坑点" class="headerlink" title="ThinkPHP6.0 与5.0的差别及坑点"></a>ThinkPHP6.0 与5.0的差别及坑点</h1><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>tp6发布已经有大半年了，之前做项目一直用的tp5，甚至没有用5.1，是因为tp5用来做了很多个项目，文档前后翻了可能有两三遍，所以对tp5会比较熟悉（个人感觉）。最近刚好做数据库的大作业，时间不大够，放弃了原来用springboot 的打算；正巧又打算把之前的项目从tp5迁移到tp6，所以打算借着这个机会先把tp6的坑踩一下，而且有之前tp5的基础，应该问题不大。</p>
+<p>接下来我会按照开发过程的顺序，从控制器（C）、模型（M）、一些配置、乱七八糟会用到的地方进行对比，同时也会讲一些坑点。</p>
+<h2 id="不同点"><a href="#不同点" class="headerlink" title="不同点"></a>不同点</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>首先一个比较大的差别是安装不再有分发压缩包的形式，改成了用composer来分发。2020年了，这确实是一个比较好的方案，看得出tp已经是一个比较成熟的框架了。而且同大版本号可以通过composer直接更新，整个流程比较流畅。</p>
+<p>食用方式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer create-project topthink/think tp</span><br></pre></td></tr></table></figure>
+
+<p>※坑点：composer国内访问较慢，换源可以大大提升体验，方法可以参考<a href="https://blog.csdn.net/weixin_43409309/article/details/105577082" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43409309/article/details/105577082</a></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>比较明显的是tp5里面的config.php被拆分成了app、cache、database、route等等模块，放在了config文件夹里。这个部分实际上变动不太大，实现也是通过配置加载的方式，我在tp5的时候已经有自己定义配置然后加载了，这个部分没有太大亮点。</p>
+<p>值得一提的是，tp6新引入了一个.env的文件，可以通过读取这个环境设置去配置数据库等等之类config里面的内容。文件采用ini格式，可以修改数据库连接等常用的配置，比较方便。之前如果分散在各处的一些配置（如ip地址、密码加密的盐值之类）可以放在同一个地方了，方便了在不同环境里部署。</p>
+<p>但是，这里要打一个但是，我一开始以为这里是一个类似springboot里面.properties文件的那种机制，可以通过不同的环境文件区分例如测试环境和开发环境。实际上只能存在一个名叫”.env”的文件（注意不是后缀名）。这里就会出现一个，在不同环境切换时可能会出现误操作覆盖了这个文件的情况，始终觉得有些别扭。</p>
+<p>※坑点：环境文件的命名一定是“.env”，没有别的字符</p>
+<h3 id="自带web服务器"><a href="#自带web服务器" class="headerlink" title="自带web服务器"></a>自带web服务器</h3><p>这确实是一个比较大的改变，调试的时候再也不需要拿出xampp了，直接<code>php think run</code>就可以在本地启动一个web服务器，还可以用<code>-p</code>参数指定端口，确实比较方便。我现在已经习惯了在PHPstormProjects下直接开发项目（因为用pycharm用多了），如果要把文件复制到htdocs里面才能测试就很麻烦，这个web服务器有点对我胃口。</p>
+<p>※坑点：不知道是什么原因，感觉这个web服务器性能可能有问题，一个普通的响应居然用时500ms+，生产环境下还是用正经的web服务器。</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>新版本的目录是有比较大的变化的，例如之前的config.php就拆分成了一个config文件夹，application文件夹重命名为app文件夹，等等之类。</p>
+<p>※坑点：建议看一下tp6文档里的目录结构</p>
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><p>这个方面变化还挺大，感觉底层可能有比较大的变动。以往控制器需要继承<code>think\Controller</code>类，现在官方有一个<code>BaseController</code>，实现的控制器只需要继承这个控制器基础类就可以。（在Model上就没有看到这个变化）</p>
+<h3 id="json接口"><a href="#json接口" class="headerlink" title="json接口"></a>json接口</h3><p>刚好说完控制器，就必须得说一下我在做JSON-RPC的时候经常用的一套方法：封装一个<code>BaseController</code>，在这里构造用来返回的JSON；然后其他控制器继承这个基类控制器，就可以比较方便地渲染JSON数据返回。现在的workaround跟原来也是类似的，用一个<code>ResponseController</code>去继承<code>BaseController</code>，然后其他控制器再继承<code>ResponseController</code>。</p>
+<p>※坑点：这里有一个比较奇怪的改变是，tp5可以在配置文件中设置返回类型为json，这样在返回时只需要返回一个数组，框架就能包装成json返回。在tp6里没有找到这样的配置，好像只能手动<code>json()</code>然后再返回。</p>
+<p>※坑点：输入的时候也是，以往输入函数可以自动处理json，例如可以通过<code>input(&quot;post.&quot;)</code>获取到post上来的json，然后解析成一个数组；tp6把json转换成一个表单，需要通过类似表单获取的方式访问，体验跟tp5稍有不同。</p>
+<h3 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h3><p>还记得之前的跨域问题吗？（<a href="https://blog.csdn.net/weixin_43409309/article/details/104287425）这个问题在tp6里终于有比较方便的解决方案了，只需要在`middleware.php`中注册`\think\middleware\AllowCrossDomain`就可以搞定跨域了。" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43409309/article/details/104287425）这个问题在tp6里终于有比较方便的解决方案了，只需要在`middleware.php`中注册`\think\middleware\AllowCrossDomain`就可以搞定跨域了。</a></p>
+<h3 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h3><p>tp6改进了中间件，具体的使用可以看一下文档，因为我没有用过 ，这方面没太大感觉。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>虽然说是一个大版本更新，底层有比较大的改变，实际操作跟tp5差别并不大。有朋友说tp6刚出的时候比较多bug，因此我也是没有第一时间尝新；现在半年多过去，感觉已经能够稳定使用了，在这一两天中也没有发现其他什么大的问题。</p>
+<p>另外有一个比较想吐槽的问题是，tp6的文档更新得真的太慢，很多文档目前还欠缺，例如视图层的文档就直接叫你参考tp5的了，以及tp5的完全开发手册其实也还有很多坑没有填上，而且在说明上也不够清楚。另外，助手函数在附录中单列了出来，但又没有具体的文档，只有一个名录，这方面有点拉胯。希望团队能重视一下文档的建设，像我这样的菜鸡在学习起来会比较有困难。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Leslie Leung</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2021/01/09/ThinkPHP6.0 与5.0的差别及坑点/">http://yoursite.com/2021/01/09/ThinkPHP6.0 与5.0的差别及坑点/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</strong></strong></span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/01/09/RESTful还是JSON-RPC？/"></a>
+            
+            
+            <a class="next" rel="next" href="/2021/01/09/thinkphp5悲观锁机制处理高并发/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Leslie Leung |</span>
+        <a href="https://beian.miit.gov.cn/">备案号：粤ICP备19129275号</a>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
